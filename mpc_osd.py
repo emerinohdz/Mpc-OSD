@@ -33,7 +33,7 @@
 # > Desktop Notifications Specification through DBUS
 # > XOSD through pyosd
 #
-# Some options can be passed as arguments and can also be fetched from a configuration
+# Options can be passed as arguments and can also be fetched from a configuration
 # file located by default at ~/.mpcosdrc, although a different path may be specified.
 #
 # The format of the configuration file is as follows:
