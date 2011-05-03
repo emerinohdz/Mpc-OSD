@@ -1,0 +1,6 @@
+v0.5
+3/May/2011
+
+* Added command line options support
+* Added configuration file support
+* Added XOSD notifications support
