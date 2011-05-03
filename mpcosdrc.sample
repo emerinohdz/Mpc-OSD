@@ -6,4 +6,4 @@ display = dbus
 stack = False
 
 host = localhost
-port = 6690
+port = 6600
