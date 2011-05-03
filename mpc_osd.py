@@ -29,11 +29,17 @@
 # script is bound to keyboard shortcuts. It may execute any command supported
 # by the mpd module and additionaly "toggle" and "info".
 #
-# This also works as a module, exporting a simple to use API for interacting
-# with MPD and displaying information on screen. It is also
-# flexible, which means it won't force you to communicate with the notification
-# window with dbus only, if libnotify or another notification spec is preferred,
-# a simple implementation of the Notification class is all that's needed. 
+# It supports two types of notification:
+# > Desktop Notifications Specification through DBUS
+# > XOSD through pyosd
+#
+# Some options can be passed as arguments and can also be fetched from a configuration
+# file located by default at ~/.mpcosdrc, although a different path may be specified.
+#
+# The format of the configuration file is as follows:
+#
+# > Lines beginning with a "#" are ignored
+# > key = value pairs accepted only
 #
 # Dependencies
 # =========
@@ -50,7 +56,7 @@
 #
 # How to run it
 # =========
-# ./mpd_osd.py --help
+# see usage()
 
 __version__ = "0.4"
 __author__  = "emerino <emerino at gmail dot com>"

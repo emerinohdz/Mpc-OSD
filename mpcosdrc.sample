@@ -1,0 +1,9 @@
+#
+# Configuración mpc_osd.py
+#
+
+display = dbus
+stack = False
+
+host = localhost
+port = 6690
