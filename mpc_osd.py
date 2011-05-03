@@ -29,11 +29,12 @@
 # script is bound to keyboard shortcuts. It may execute any command supported
 # by the mpd module and additionaly "toggle" and "info".
 #
-# It supports two types of notification:
+# It supports three types of notification:
 # > Desktop Notifications Specification through DBUS
 # > XOSD through pyosd
+# > Desktop Notifications Specification through libnotify
 #
-# Options can be passed as arguments and can also be fetched from a configuration
+# Options can be passed as arguments or can also be fetched from a configuration
 # file located by default at ~/.mpcosdrc, although a different path may be specified.
 #
 # The format of the configuration file is as follows:
@@ -54,11 +55,14 @@
 # XOSD
 #   pyosd
 #
+# LIBNOTIFY
+#   pynotify
+#
 # How to run it
 # =========
 # see usage()
 
-__version__ = "0.5"
+__version__ = "0.6"
 __author__  = "emerino <emerino at gmail dot com>"
 __date__    = "$29/04/2011 06:18:45 PM$"
 
@@ -66,24 +70,31 @@ import os
 import sys
 import getopt
 
-from logging import warning
 from mpd import MPDClient
 
 # DBUS Desktop Notifications Specification
 try:
     import dbus
+    DBUS_AVAILABLE = True
 except ImportError:
-    warning("python-dbus missing, no DBUS notifications")
+    DBUS_AVAILABLE = False
 
 # PyOSD (xosd)
 try:
     import time
     import threading
     import pyosd
+    XOSD_AVAILABLE = True
 except ImportError:
-    warning("pyosd missing, no XOSD notifications")
+    XOSD_AVAILABLE = False
 
-# TODO: libnotify implementation
+# Libnotify (pynotify)
+try:
+    import pynotify
+    LIBNOTIFY_AVAILABLE = True
+except ImportError:
+    LIBNOTIFY_AVAILABLE = False
+    
 
 def main():
     player = None
@@ -121,12 +132,15 @@ Usage: mpd_osd.py <options> [command]
 Available options:
     -c, --config        path to mpcosdrc configuration file
     -d, --display       display notification to use: dbus | xosd | libnotify
-    -s, --stack         stack notifications, default is not stacked (when supported)
+    -s, --stack         stack notifications, default is not stacked:
+                            libnotify always stacks notifications
+                            dbus does not stack notifications by default
+                            xosd does not support stacking
     -h, --host          mpd server: tcp host | unix socket
     -p, --port          mpd server tcp port
 
-    --font          xosd font
-    --color         xosd color
+    --font              xosd font
+    --color             xosd color
     --help              show this message
 
 Available commands:
@@ -162,9 +176,6 @@ def parse_parameters():
 
     opts, args = getopt.getopt(sys.argv[1:], short_opts, long_opts)
 
-    if not args or len(args) == 0:
-        raise Exception("Command missing")
-
     for opt,arg in opts:
         if opt == "--help":
             usage()
@@ -183,6 +194,9 @@ def parse_parameters():
             config["font"] = arg
         elif opt == "--color":
             config["color"] = arg
+
+    if not args or len(args) == 0:
+        raise Exception("Command missing")
 
     if config_file:
         user_config = {}
@@ -213,15 +227,24 @@ def get_notification_box(conf):
     name = conf["display"]
 
     if name == "xosd":
-        return osd_notification(conf["font"], conf["color"])
+        if not XOSD_AVAILABLE:
+            raise Exception("No pyosd library found, XOSD is not supported")
+
+        return xosd_notification(conf["font"], conf["color"])
     elif name == "dbus":
+        if not DBUS_AVAILABLE:
+            raise Exception("No python-dbus library found, DBUS is not supported")
+
         return dbus_notification(conf["stack"])
     elif name == "libnotify":
-        raise NotImplementedError
+        if not LIBNOTIFY_AVAILABLE:
+            raise Exception("No pynotify library found, libnotify is not supported")
+
+        return libnotify_notification()
     else:
         raise ValueError("Wrong display notifier specified")
         
-def osd_notification(font, color):
+def xosd_notification(font, color):
     return XOSDNotification(3, font, color)
 
 def dbus_notification(stack):
@@ -236,6 +259,9 @@ def dbus_notification(stack):
                                                   uid_file=uid_file)
 
     return dbus_notification
+
+def libnotify_notification():
+    return LibnotifyNotification("mpc_osd")
 
 class MPCPlayer:
     """
@@ -449,6 +475,25 @@ class UniqueDBusNotification(DBusNotification):
         f = open(self.__uid_file, "w")
         f.write(str(self.uid))
         f.close()
+
+class LibnotifyNotification(Notification):
+    def __init__(self, app_name):
+        if not pynotify.init(app_name):
+            raise Exception("There was an error initializing libnotify")
+
+    def notify(self, song_info):
+        content = {
+            "summary": song_info["title"],
+            "body": song_info["artist"],
+            "icon": song_info["icon"]    
+        }
+
+        notification = pynotify.Notification(content["summary"], \
+                                             content["body"], \
+                                             content["icon"])
+
+        notification.show()
+
 
 if __name__ == "__main__":
     main()
