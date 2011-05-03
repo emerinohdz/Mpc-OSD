@@ -44,8 +44,8 @@ Available options:
     -h, --host          mpd server: tcp host | unix socket
     -p, --port          mpd server tcp port
 
-    --font          xosd font
-    --color         xosd color
+    --font				xosd font
+    --color				xosd color
     --help              show this message
 
 Available commands:
