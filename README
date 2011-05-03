@@ -56,6 +56,7 @@ How to run it
 Usage: mpd_osd.py <options> [command]
 
 Available options:
+    -c, --config        path to mpcosdrc configuration file
     -d, --display       display notification to use: dbus | xosd | libnotify
     -s, --stack         stack notifications, default is not stacked (when supported)
     -h, --host          mpd server: tcp host | unix socket
@@ -73,4 +74,4 @@ Available commands:
     info                display information for the current song
     next                next song in playlist
     previous            previous song in playlist
-	shuffle				shuffle the playlist
+    shuffle				shuffle the playlist

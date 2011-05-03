@@ -119,6 +119,7 @@ def usage():
 Usage: mpd_osd.py <options> [command]
 
 Available options:
+    -c, --config        path to mpcosdrc configuration file
     -d, --display       display notification to use: dbus | xosd | libnotify
     -s, --stack         stack notifications, default is not stacked (when supported)
     -h, --host          mpd server: tcp host | unix socket
