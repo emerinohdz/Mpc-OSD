@@ -58,7 +58,7 @@
 # =========
 # see usage()
 
-__version__ = "0.4"
+__version__ = "0.5"
 __author__  = "emerino <emerino at gmail dot com>"
 __date__    = "$29/04/2011 06:18:45 PM$"
 
