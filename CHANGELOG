@@ -1,5 +1,11 @@
-v0.5
+v0.6
 3/May/2011
+
+* Added libnotify notifications support
+* Fixed bug that caused the --help option to display "Command missing"
+
+v0.5
+2/May/2011
 
 * Added command line options support
 * Added configuration file support

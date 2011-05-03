@@ -11,8 +11,9 @@ by the mpd module and additionaly "toggle" and "info".
 It supports two types of notification:
 > Desktop Notifications Specification through DBUS
 > XOSD through pyosd
+> Desktop Notifications Specification through libnotify
 
-Options can be passed as arguments and can also be fetched from a configuration
+Options can be passed as arguments or can also be fetched from a configuration
 file located by default at ~/.mpcosdrc, although a different path may be specified.
 
 The format of the configuration file is as follows:
@@ -40,7 +41,10 @@ Usage: mpd_osd.py <options> [command]
 Available options:
     -c, --config        path to mpcosdrc configuration file
     -d, --display       display notification to use: dbus | xosd | libnotify
-    -s, --stack         stack notifications, default is not stacked (when supported)
+    -s, --stack         stack notifications, default is not stacked:
+                            libnotify always stacks notifications
+                            dbus does not stack notifications by default
+                            xosd does not support stacking
     -h, --host          mpd server: tcp host | unix socket
     -p, --port          mpd server tcp port
 
