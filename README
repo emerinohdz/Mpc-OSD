@@ -1,0 +1,51 @@
+Copyright (C) 2011 by Edgar Merino (http://devio.us/~emerino)
+
+Licensed under the Artistic License 2.0 (The License). 
+You may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+
+   http://www.perlfoundation.org/artistic_license_2_0
+
+THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS
+IS" AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR
+NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL
+LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+This script acts as a client for a MPD server and displays information about
+the current song being played through the org.freedesktop.Notifications DBus
+interface. By reusing (serializing/deserializing) the UID for the Notification
+window it guarantees the information will be displayed in the same window.
+By doing this, instead of using "pynotify" or the command line tool
+"notify-send", the script doesn't need to be run as a daemon, instead it
+should be called on a per command basis (like mpc). This is useful when the
+script is bound to keyboard shortcuts. It may execute any command supported
+by the mpd module and additionaly "toggle" and "info".
+
+This also works as a module, exporting a simple to use API for interacting
+with MPD and displaying information on screen. It is also
+flexible, which means it won't force you to communicate with the notification
+window with dbus only, if libnotify or another notification spec is preferred,
+a simple implementation of the Notification class is all that's needed. 
+
+Dependencies
+=========
+python >= 2.5
+python-mpdclient
+
+DBUS
+  python-dbus
+  an implementation of the Desktop Notifications Specification 
+                              (e.g. notify-osd, xfce4-notifyd)
+
+XOSD
+  pyosd
+
+How to run it
+=========
+./mpd_osd.py --help
+
