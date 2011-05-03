@@ -130,6 +130,7 @@ Available commands:
     info                display information for the current song
     next                next song in playlist
     previous            previous song in playlist
+    shuffle             shuffle the playlist
     """
 
 def parse_parameters():

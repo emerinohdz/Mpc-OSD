@@ -47,5 +47,24 @@ XOSD
 
 How to run it
 =========
-./mpd_osd.py --help
+Usage: mpd_osd.py <options> [command]
 
+Available options:
+    -d, --display       display notification to use: dbus | xosd | libnotify
+    -s, --stack         stack notifications, default is not stacked (when supported)
+    -h, --host          mpd server: tcp host | unix socket
+    -p, --port          mpd server tcp port
+    -f, --font          xosd font
+    -c, --color         xosd color
+
+    --help              show this message
+
+Available commands:
+    play                play current song
+    pause               pause current song
+    toggle              toggle play/pause
+    stop                stop current song
+    info                display information for the current song
+    next                next song in playlist
+    previous            previous song in playlist
+	shuffle				shuffle the playlist
