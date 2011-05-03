@@ -117,9 +117,9 @@ Available options:
     -s, --stack         stack notifications, default is not stacked (when supported)
     -h, --host          mpd server: tcp host | unix socket
     -p, --port          mpd server tcp port
-    -f, --font          xosd font
-    -c, --color         xosd color
 
+    --font          xosd font
+    --color         xosd color
     --help              show this message
 
 Available commands:
