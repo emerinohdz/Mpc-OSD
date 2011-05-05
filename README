@@ -8,7 +8,7 @@ should be called on a per command basis (like mpc). This is useful when the
 script is bound to keyboard shortcuts. It may execute any command supported
 by the mpd module and additionaly "toggle" and "info".
 
-It supports two types of notification:
+It supports three types of notification:
 > Desktop Notifications Specification through DBUS
 > XOSD through pyosd
 > Desktop Notifications Specification through libnotify
