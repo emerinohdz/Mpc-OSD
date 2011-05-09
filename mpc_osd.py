@@ -127,7 +127,7 @@ def main():
 
 def usage():
     print """
-Usage: mpd_osd.py <options> [command]
+Usage: mpd_osd.py <options> command
 
 Available options:
     -c, --config        path to mpcosdrc configuration file
