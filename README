@@ -1,12 +1,9 @@
 This script acts as a client for a MPD server and displays information about
-the current song being played through the org.freedesktop.Notifications DBus
-interface. By reusing (serializing/deserializing) the UID for the Notification
-window it guarantees the information will be displayed in the same window.
-By doing this, instead of using "pynotify" or the command line tool
-"notify-send", the script doesn't need to be run as a daemon, instead it
-should be called on a per command basis (like mpc). This is useful when the
-script is bound to keyboard shortcuts. It may execute any command supported
-by the mpd module and additionaly "toggle" and "info".
+the current song being played using one of the supported notification backends.
+The script doesn't need to be run as a daemon, instead it should be called on 
+a per command basis (like mpc). This is useful when the script is bound to 
+keyboard shortcuts. It may execute any command supported by the mpd module 
+and additionaly "toggle" and "info".
 
 It supports three types of notification:
 > Desktop Notifications Specification through DBUS
